@@ -1,0 +1,6 @@
+.venv/*
+.pixi/*
+.idea/*
+log/*
+logs/*
+*.env
