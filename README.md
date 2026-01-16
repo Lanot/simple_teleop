@@ -1,5 +1,20 @@
 # simple_teleop
 
+Simplifies drone control for camera calibration purposes as example.
+
+### Control Robot via simple teleop command:
+```
+Use Arrows to control linear velocities:
+    ↑ / ↓ - X axis - Move Forward & Backwards
+    ← / → - Y axis - Move Left & Right
+
+    w/s - Z axis - Move UP & DOWN
+    a/d - Z axis - Rotate/YAW Left & Right
+
+    esc: QUIT,
+    other key: STOP movement
+```
+
 ### Run in Command Line
 ```
 # publish twist messages into the default MavRos  topic: /cmd_vel

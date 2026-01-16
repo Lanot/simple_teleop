@@ -37,7 +37,6 @@ class TeleopControl(Node):
 
     # 20Hz - works good
     def publish_vel(self):
-        print("publish_vel: ", self.vel)
         self.vel_pub.publish(self.vel)
 
     def print_info(self):
