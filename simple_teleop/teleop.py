@@ -13,109 +13,95 @@ from geometry_msgs.msg import Twist
 
 class TeleopControl(Node):
     def __init__(self):
-        atexit.register(self.emergency_stop)
+        atexit.register(self.publish_stop)
 
         super().__init__('teleop_control')
 
         self.declare_parameter('topic', '/cmd_vel')
-        self.declare_parameter("step", 0.1)
+        self.declare_parameter("step", 0.2)
         self.declare_parameter("publish_rate", 10)
-
 
         self.topic = self.get_parameter('topic').get_parameter_value().string_value
         self.step = self.get_parameter("step").value
-        self.publish_rate = 1 / self.get_parameter("publish_rate").value
+        self.publish_rate = self.get_parameter("publish_rate").value
 
         self.vel = Twist()
         self.vel_pub = self.create_publisher(Twist, self.topic, 10)
-        self.create_timer(self.publish_rate, self.publish_teleop)
+        self.create_timer(1 / self.publish_rate, self.publish_vel)
 
         self.print_info()
-
         self.run()
 
-    def emergency_stop(self):
+    def publish_stop(self):
         self.vel_pub.publish(Twist())
 
     # 20Hz - works good
-    def publish_teleop(self):
-        self.vel_pub.publish(self.current_vel_cm)
+    def publish_vel(self):
+        print("publish_vel: ", self.vel)
+        self.vel_pub.publish(self.vel)
 
     def print_info(self):
-        self.get_logger().info("\n\tUse Arrows to increment linear velocities by x and y axes, +/- - to up and down\n\
-            a/d,\n\
-            w/s,\n\
-            z/x,\n\
-            space: zero velocity command,\n\
-            ~esc: QUIT")
+        self.get_logger().info(f"\n\tPublishing teleop command to {self.topic}\n\
+            Step is {self.step}\n\
+            Publish Rate is {self.publish_rate}")
+
+        self.get_logger().info("\n\n\tUse Arrows to control linear velocities:\n\
+            ↑ / ↓ - X axis - Move Forward & Backwards\n\
+            ← / → - Y axis - Move Left & Right\n\n\
+            w/s - Z axis - Move UP & DOWN\n\
+            a/d - Z axis - Rotate/YAW Left & Right\n\n\
+            esc: QUIT,\n\
+            other key: STOP movement")
 
     def on_press(self, key):
         has_char = hasattr(key, 'char')
 
         if key == Key.esc:
-            print("~ESC~ key clicked")
+            print("\n~ ESC ~ key clicked\n")
             raise KeyboardInterrupt()
 
         # move backward / forward by x-axis
         elif key == Key.up:
-            print("Up key clicked")
             self.vel.linear.x += self.step
         elif key == Key.down:
-            print("Down key clicked")
             self.vel.linear.x -= self.step
 
         # move backward / forward by y-axis
         elif key == Key.right:
-            print("Right key clicked")
             self.vel.linear.y -= self.step
         elif key == Key.left:
-            print("Left key clicked")
             self.vel.linear.y += self.step
 
         # down and up by z-axis
-        elif has_char is not None and key.char == "-":
-            print("- key clicked")
+        elif has_char and key.char == "s":
             self.vel.linear.z -= self.step
-        elif has_char is not None and key.char == "=":
-            print("+ key clicked")
+        elif has_char and key.char == "w":
             self.vel.linear.z += self.step
 
         # yaw ?
-        elif has_char is not None and key.char == "a":
-            print("a key clicked")
-            self.vel.angular.z -= self.step
-        elif has_char is not None and key.char == "d":
-            print("d key clicked")
+        elif has_char and key.char == "a":
             self.vel.angular.z += self.step
-
-        # pitch ?
-        elif has_char is not None and key.char == "w":
-            print("w key clicked")
-            self.vel.angular.y -= self.step
-        elif has_char is not None and key.char == "s":
-            print("s key clicked")
-            self.vel.angular.y += self.step
-
-        # roll ?
-        elif has_char is not None and key.char == "z":
-            print("z key clicked")
-            self.vel.angular.x -= self.step
-        elif has_char is not None and key.char == "x":
-            print("x key clicked")
-            self.vel.angular.x += self.step
+        elif has_char and key.char == "d":
+            self.vel.angular.z -= self.step
 
         else:
-            self.vel.linear.x = 0
-            self.vel.linear.y = 0
-            self.vel.linear.z = 0
-            self.vel.angular.x = 0
-            self.vel.angular.y = 0
-            self.vel.angular.z = 0
+            self.vel.linear.x = 0.0
+            self.vel.linear.y = 0.0
+            self.vel.linear.z = 0.0
+            self.vel.angular.x = 0.0
+            self.vel.angular.y = 0.0
+            self.vel.angular.z = 0.0
 
-    # Create Listener Thread
+    # Create Keyboard Listener Thread
+    # @See: https://pynput.readthedocs.io/en/latest/keyboard.html
     def run(self):
-        with keyboard.Listener(on_press=self.on_press) as listener:
-            listener.join()
+        # non-blocking mode for threads
+        listener = keyboard.Listener(on_press=self.on_press)
+        listener.start()
+
+        # blocking mode for threads
+        # with keyboard.Listener(on_press=self.on_press) as listener:
+        #     listener.join() # blocking mode for threads
 
 def main(args=None):
     rclpy.init(args=args)
