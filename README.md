@@ -13,8 +13,8 @@ Use Arrows to control linear velocities:
     ↑ / ↓ - X axis - Move Forward & Backwards
     ← / → - Y axis - Move Left & Right
 
-    w/s - Z axis - Move UP & DOWN
-    a/d - Z axis - Rotate/YAW Left & Right
+    w / s - Z axis - Move UP & DOWN
+    a / d - Z axis - Rotate/YAW Left & Right
 
     esc: QUIT,
     other key: STOP movement
