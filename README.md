@@ -36,4 +36,8 @@ ros2 run simple_teleop teleop --ros-args -p topic:=/drone0/cmd_vel
 ```publish_rate = 10```
 
 
-### Requires Python module `pynput` for getting keyboard events
+### Requires Python module `pynput` for getting keyboard events.
+
+### Note: Following key presses increase linear or angular speed by the provided step argument.
+
+### Inspirated by origin project: https://github.com/tonynajjar/keyboard_teleop
