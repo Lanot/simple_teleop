@@ -13,10 +13,10 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='tolik',
+    maintainer='Anatolii Lehkyi',
     maintainer_email='lanot.biz@gmail.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    description='ROS2 Simple Teleop',
+    license='No License',
     extras_require={
         'test': [
             'pytest',
