@@ -30,3 +30,6 @@ ros2 run simple_teleop teleop --ros-args -p topic:=/drone0/cmd_vel
 ```topic = /cmd_vel```, 
 ```step = 0.2```, 
 ```publish_rate = 10```
+
+
+### Requires Python module `pynput` for getting keyboard events

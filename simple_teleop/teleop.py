@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 
-import traceback
+#import traceback
 import atexit
+
 # from threading import Thread
 from pynput import keyboard
 from pynput.keyboard import Key
@@ -57,7 +58,7 @@ class TeleopControl(Node):
 
         if key == Key.esc:
             print("\n~ ESC ~ key clicked\n")
-            raise KeyboardInterrupt()
+            raise KeyboardInterrupt
 
         # move backward / forward by x-axis
         elif key == Key.up:
@@ -116,7 +117,7 @@ def main(args=None):
 
     except Exception as e:
         print(f'An error occurred: {e}')
-        traceback.print_tb(e.__traceback__)
+        #traceback.print_tb(e.__traceback__)
 
     finally:
         if 'node' in locals():
