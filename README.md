@@ -2,6 +2,10 @@
 
 Simplifies drone control for camera calibration purposes as example.
 
+Once teleop command is run the tab can be switched to a different one, as thankfully for `pynput` all keyboard events are listening in background mode and command terminal is not required to be active. 
+
+It is suitable for camera calibration purpose, because we can focus on RVIZ Images and not on linux terminal.
+
 ### Control Robot via simple teleop command:
 ```
 Use Arrows to control linear velocities:
