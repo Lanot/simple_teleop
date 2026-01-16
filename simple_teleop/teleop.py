@@ -42,15 +42,15 @@ class TeleopControl(Node):
     def print_info(self):
         self.get_logger().info(f"\n\tPublishing teleop command to {self.topic}\n\
             Step is {self.step}\n\
-            Publish Rate is {self.publish_rate}")
+            Publish Rate is {self.publish_rate}\n")
 
-        self.get_logger().info("\n\n\tUse Arrows to control linear velocities:\n\
+        self.get_logger().info("\n\n\tUse Arrows to control linear velocities:\n\n\
             ↑ / ↓ - X axis - Move Forward & Backwards\n\
             ← / → - Y axis - Move Left & Right\n\n\
             w/s - Z axis - Move UP & DOWN\n\
             a/d - Z axis - Rotate/YAW Left & Right\n\n\
             esc: QUIT,\n\
-            other key: STOP movement")
+            other key: STOP movement\n")
 
     def on_press(self, key):
         has_char = hasattr(key, 'char')

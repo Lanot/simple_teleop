@@ -5,6 +5,7 @@ Simplifies drone control for camera calibration purposes as example.
 ### Control Robot via simple teleop command:
 ```
 Use Arrows to control linear velocities:
+
     ↑ / ↓ - X axis - Move Forward & Backwards
     ← / → - Y axis - Move Left & Right
 
@@ -13,6 +14,7 @@ Use Arrows to control linear velocities:
 
     esc: QUIT,
     other key: STOP movement
+
 ```
 
 ### Run in Command Line
