@@ -54,6 +54,7 @@ class TeleopControl(Node):
             w / s  : X axis : Move Forward & Backward by X-Axis (Duplicated),\n\
             \n\
             + / -  : Z axis : Move UP & DOWN,\n\
+            x / z  : Z axis : Move UP & DOWN (Duplicated),\n\
             \n\
             esc: QUIT,\n\
             other key: STOP movement\n")
@@ -65,16 +66,10 @@ class TeleopControl(Node):
             print("\n~ ESC ~ key clicked\n")
             raise KeyboardInterrupt
 
-        # move up and down up by z-axis
-        elif has_char and key.char == "+":
-            self.vel.linear.z += self.step
-        elif has_char and key.char == "-":
-            self.vel.linear.z -= self.step
-
         # move forward / backward by x-axis
-        elif key == Key.up or  has_char and key.char == "w":
+        elif key == Key.up:
             self.vel.linear.x += self.step
-        elif key == Key.down or  has_char and key.char == "s":
+        elif key == Key.down:
             self.vel.linear.x -= self.step
 
         # yaw
@@ -83,11 +78,23 @@ class TeleopControl(Node):
         elif key == Key.left:
             self.vel.angular.z += self.step
 
+        # move forward / backward by x-axis
+        elif has_char and key.char == "w":
+            self.vel.linear.x += self.step
+        elif has_char and key.char == "s":
+            self.vel.linear.x -= self.step
+
         # move left / right by y-axis
         elif has_char and key.char == "a":
             self.vel.linear.y += self.step
         elif has_char and key.char == "d":
             self.vel.linear.y -= self.step
+
+        # move up and down up by z-axis
+        elif has_char and (key.char == "+" or key.char == "x"):
+            self.vel.linear.z += self.step
+        elif has_char and (key.char == "-" or key.char == "z"):
+            self.vel.linear.z -= self.step
 
         else:
             self.vel.linear.x = 0.0
