@@ -45,11 +45,16 @@ class TeleopControl(Node):
             Step is {self.step}\n\
             Publish Rate is {self.publish_rate}\n")
 
-        self.get_logger().info("\n\n\tUse Arrows to control linear velocities:\n\n\
-            ↑ / ↓ - X axis - Move Forward & Backwards\n\
-            ← / → - Y axis - Move Left & Right\n\n\
-            w/s - Z axis - Move UP & DOWN\n\
-            a/d - Z axis - Rotate/YAW Left & Right\n\n\
+        self.get_logger().info("\n\n\tUse Arrows to control linear velocities:\n\
+            \n\
+            ↑ / ↓  : X axis : Move Forward & Backward by X-Axis,\n\
+            ← / →  : Z axis : Rotate/YAW Left & Right by Z-Axis,\n\
+            \n\
+            a / d  : Y axis : Move Left & Right,\n\
+            w / s  : X axis : Move Forward & Backward by X-Axis (Duplicated),\n\
+            \n\
+            + / -  : Z axis : Move UP & DOWN,\n\
+            \n\
             esc: QUIT,\n\
             other key: STOP movement\n")
 
@@ -60,29 +65,29 @@ class TeleopControl(Node):
             print("\n~ ESC ~ key clicked\n")
             raise KeyboardInterrupt
 
-        # move backward / forward by x-axis
-        elif key == Key.up:
+        # move up and down up by z-axis
+        elif has_char and key.char == "+":
+            self.vel.linear.z += self.step
+        elif has_char and key.char == "-":
+            self.vel.linear.z -= self.step
+
+        # move forward / backward by x-axis
+        elif key == Key.up or  has_char and key.char == "w":
             self.vel.linear.x += self.step
-        elif key == Key.down:
+        elif key == Key.down or  has_char and key.char == "s":
             self.vel.linear.x -= self.step
 
-        # move backward / forward by y-axis
+        # yaw
         elif key == Key.right:
-            self.vel.linear.y -= self.step
-        elif key == Key.left:
-            self.vel.linear.y += self.step
-
-        # down and up by z-axis
-        elif has_char and key.char == "s":
-            self.vel.linear.z -= self.step
-        elif has_char and key.char == "w":
-            self.vel.linear.z += self.step
-
-        # yaw ?
-        elif has_char and key.char == "a":
-            self.vel.angular.z += self.step
-        elif has_char and key.char == "d":
             self.vel.angular.z -= self.step
+        elif key == Key.left:
+            self.vel.angular.z += self.step
+
+        # move left / right by y-axis
+        elif has_char and key.char == "a":
+            self.vel.linear.y += self.step
+        elif has_char and key.char == "d":
+            self.vel.linear.y -= self.step
 
         else:
             self.vel.linear.x = 0.0

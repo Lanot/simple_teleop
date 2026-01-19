@@ -10,12 +10,14 @@ It is suitable for camera calibration purpose, because we can focus on RVIZ Imag
 ```
 Use Arrows to control linear velocities:
 
-    ↑ / ↓ - X axis - Move Forward & Backwards
-    ← / → - Y axis - Move Left & Right
+    ↑ / ↓  : X axis : Move Forward & Backward by X-Axis
+    ← / →  : Z axis : Rotate/YAW Left & Right by Z-Axis
 
-    w / s - Z axis - Move UP & DOWN
-    a / d - Z axis - Rotate/YAW Left & Right
+    a / d  : Y axis : Move Left & Right
+    w / s  : X axis : Move Forward & Backward by X-Axis (Duplicated)
 
+    + / -  : Z axis : Move UP & DOWN
+  
     esc: QUIT,
     other key: STOP movement
 
