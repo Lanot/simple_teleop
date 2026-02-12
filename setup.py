@@ -11,12 +11,14 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Anatolii Lehkyi',
     maintainer_email='lanot.biz@gmail.com',
     description='ROS2 simple_teleop package for camera calibration purposes ',
     license='No License',
+    install_requires=[
+        "pynput==1.8.1"
+    ],
     extras_require={
         'test': [
             'pytest',
